@@ -28,7 +28,7 @@ export default function HomePengajar() {
         {/* <Link className="flex flex-col" href="/create-discussion"> */}
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="bg-purple-900 text-white font-semibold p-5 rounded-lg mt-4" variant="outline">
+            <Button className="bg-purple-900 text-white font-semibold text-lg py-6 rounded-lg mt-4 border-none" variant="outline">
               Generate PIN
             </Button>
           </DialogTrigger>

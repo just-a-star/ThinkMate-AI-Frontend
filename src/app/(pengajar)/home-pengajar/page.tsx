@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "../../components/ui/button";
 export default function HomePengajar() {
   return (
     <main className="flex min-h-screen flex-col items-center  p-24">
@@ -19,7 +20,7 @@ export default function HomePengajar() {
         <input type="text" placeholder="Masukkan PIN" className="px-10 p-4 border border-slate-300 rounded-lg" />
 
         <Link className="flex flex-col" href="/create-discussion">
-          <button className="bg-purple-900 text-white font-semibold p-4 rounded-lg mt-4">Login as Teachers</button>
+          <Button className="bg-purple-900 text-white font-semibold py-6 text-lg rounded-lg mt-4">Login as Teachers</Button>
         </Link>
         <p className="text-center text-slate-500 mt-4">
           Belum punya akun?{" "}
