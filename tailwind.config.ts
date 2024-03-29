@@ -15,6 +15,9 @@ const config = {
     extend: {
       colors: {
         // Custom colors
+        abu: {
+          300: "#FDFCFF"
+        },
         ungu: {
           300: "#E3E3F1",
           800: "#5E5B92",

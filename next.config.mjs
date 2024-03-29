@@ -9,6 +9,16 @@ const nextConfig = {
 
     return config;
   },
+
+  // Adjusting routes
+  async rewrites() {
+    return [
+      {
+        source: "/login",
+        destination: "/auth/login",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

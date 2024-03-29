@@ -35,14 +35,14 @@ export default function HomeSiswa() {
               Go!
             </Button>
           </DialogTrigger>
-          <DialogContent className="pb-0 px-0 m-0 sm:max-w-[425px]">
+          <DialogContent className="pb-0 rounded-lg px-0 m-0 sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="pl-4 text-green-600">Isi Nama dan Nomor Absen Kamu!</DialogTitle>
+              <DialogTitle className="pl-4 text-center text-xl text-green-600">Isi Nama dan Nomor Absen Kamu!</DialogTitle>
             </DialogHeader>
             <div className="flex flex-col items-center">
               <Image src="/images/alert-true.png" alt="alt" width={100} height={100} />
               <DialogDescription className="text-center font-semibold text-xl text-gray-800 ">52431 - Kelas Pancasila</DialogDescription>
-              <DialogDescription>Yuk, bagikan PIN ini ke temanmu!</DialogDescription>
+
               <div className="pt-4 w-full justify-center items-center flex flex-col">
                 <Input type="text" placeholder="Nama Lengkap" required className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2" />
                 <Input type="number" placeholder="Nomor Absen" required className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2" />
@@ -51,7 +51,7 @@ export default function HomeSiswa() {
               </div>
             </div>
             <DialogFooter className="mt-4">
-              <Link href="/detail-discussion" className="w-full ">
+              <Link href="/discuss" className="w-full ">
                 <Button className="text-white w-full items-center  bg-purple-800" type="submit">
                   Mulai diskusi sekarang!
                 </Button>

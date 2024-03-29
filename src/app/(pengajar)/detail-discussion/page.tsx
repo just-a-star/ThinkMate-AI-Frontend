@@ -130,7 +130,7 @@ export default function DetailDiscussion() {
   ];
 
   return (
-    <main className="container flex min-h-screen flex-col items-center p-24">
+    <main className="container flex min-h-screen flex-col items-center py-8 px-2">
       {/* Header - Nav */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
@@ -146,10 +146,9 @@ export default function DetailDiscussion() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </header>
-
       {/* Title Discussion */}
       <div className="container ">
-        <div className="flex py-3 justify-start flex-col w-full pt-4">
+        <div className="flex py-4 justify-start flex-col w-full pt-8">
           <h1 className="items-start text-2xl font-small text-purple-800">
             Diskusi Pancasila - <span className="text-black font-semibold">52341</span>
           </h1>
@@ -159,13 +158,13 @@ export default function DetailDiscussion() {
 
         {/* List discussion */}
         <div className="flex justify-start w-full pb-4">
-          <div className=" p-2 bg-purple-100 rounded">
+          <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
             <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
           </div>
 
           <div className="flex flex-col pl-2">
             <h2>
-              Diskusi Alma Ziza - <span className="text-purple-800 text-semobold">25</span>
+              Diskusi Alma Ziza <span className="text-purple-80 sm:hidden md:hidden text-semobold overflow-hidden">- 25</span>
             </h2>
             <h3 className="items-left text-slate-500">
               22/07/2022 - <span>11:34</span>
@@ -177,7 +176,7 @@ export default function DetailDiscussion() {
         </div>
 
         <div className="flex justify-start w-full">
-          <div className=" p-2 bg-purple-100 rounded">
+          <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
             <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
           </div>
 
@@ -194,7 +193,6 @@ export default function DetailDiscussion() {
           </div>
         </div>
       </div>
-
       <nav className="flex items-center justify-between w-full">
         <Link href="/home-pengajar"></Link>
       </nav>

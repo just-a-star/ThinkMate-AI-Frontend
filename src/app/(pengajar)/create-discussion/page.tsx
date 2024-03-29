@@ -11,7 +11,7 @@ export default function CreateDiscussion() {
     <main className="flex min-h-screen flex-col items-center p-24">
       {/* Hero */}
       <div className="flex flex-col items-center">
-        <Image src="/images/smiling-paper.jpg" alt="ThinkMateAI Logo" width={300} height={300} priority />
+        <Image src="/images/smiling-paper.png" alt="ThinkMateAI Logo" width={256} height={256} priority />
         <h1 className="text-center text-4xl font-semibold mt-8">
           Create a new
           <span className="text-purple-800 block">discussion</span>
@@ -32,9 +32,9 @@ export default function CreateDiscussion() {
               Generate PIN
             </Button>
           </DialogTrigger>
-          <DialogContent className="pb-0 px-0 m-0 sm:max-w-[425px]">
+          <DialogContent className="pb-0 rounded-lg px-0 m-0 sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="pl-4 text-green-600">Berhasil membuat diskusi!</DialogTitle>
+              <DialogTitle className="text-center text-2xl md:text-xl text-green-600">Berhasil membuat diskusi!</DialogTitle>
             </DialogHeader>
             <div className="flex flex-col items-center">
               <Image src="/images/alert-true.png" alt="alt" width={100} height={100} />
