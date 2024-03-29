@@ -3,15 +3,15 @@ import Link from "next/link";
 import { Button } from "../../components/ui/button";
 export default function HomePengajar() {
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24">
+    <main className="flex min-h-screen flex-col items-center p-24">
       {/* Hero */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center text-center  ">
         <Image src="/images/bonbon-girl-5.png" alt="ThinkMateAI Logo" width={200} height={200} priority />
-        <h1 className="text-center text-4xl font-semibold mt-8">
+        <h1 className="text-center text-4xl text-wrap font-semibold mt-8">
           Welcome to
-          <span className="text-purple-800 block"> ThinkMate AI!</span>
+          <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span>
         </h1>
-        <p className="p-6 text-slate-500">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
+        <p className="py-6 text-pretty text-slate-500 block">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
       </div>
 
       {/* Form PIN */}

@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["./node_modules/react-audio-player-component/dist/index.d.ts"],
     "plugins": [
       {
         "name": "next"

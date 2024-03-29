@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 
-export default function HomePengajar() {
+export default function CreateDiscussion() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {/* Hero */}
@@ -16,7 +16,7 @@ export default function HomePengajar() {
           Create a new
           <span className="text-purple-800 block">discussion</span>
         </h1>
-        <p className="p-6 text-slate-500">Lorem ipmsum dolor sit amet</p>
+        <p className="py-6 text-slate-500">Lorem ipmsum dolor sit amet</p>
       </div>
 
       {/* Form PIN */}
