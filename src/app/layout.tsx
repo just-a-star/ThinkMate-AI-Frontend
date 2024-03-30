@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Rubik as FontSans } from "next/font/google";
 import { cn } from "./lib/utils";
+import Providers from "../config/Providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -11,7 +12,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "ThinkMate AI",
-  description: "lorem ipmsum dolor sit amet",
+  description: "Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa",
 };
 
 export default function RootLayout({
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>{children}</body>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
