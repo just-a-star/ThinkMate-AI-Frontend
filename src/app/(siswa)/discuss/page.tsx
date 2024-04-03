@@ -8,7 +8,6 @@ import { ChevronLeft } from "lucide-react";
 import MicrophoneSVG from "../../../../public/images/microphone-chat.svg";
 import { Textarea } from "../../components/ui/textarea";
 import { useState, useEffect, SetStateAction } from "react";
-import { QuizProvider } from "../../../context/QuizContext";
 import Providers from "../../../config/Providers";
 import { useQuiz } from "../../services/queries";
 import { postFetcher } from "../../services/fetcher";
@@ -20,15 +19,16 @@ export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [quizResponse, setQuizResponse] = useState({ pin: "", id: null, topic: "" });
+
   useEffect(() => {
     const startConversation = async () => {
       const data = {
-        quiz_id: 25,
+        quiz_id: 31,
         name: "bintang",
       };
+      const apiUrl = `/conversation/{conversationId}`;
+      // get req
+      // const response = await getFetcher(apiUrl, pinQuiz);
       const response = await postFetcher("/conversation", data);
       setConversationId(response.data.id);
     };
@@ -43,7 +43,7 @@ export default function DiscussSiswa() {
     e.preventDefault();
     if (!userMessage.trim()) return; // Prevent sending empty messages
     // Assuming '/messages' is your endpoint for sending messages
-    const messageData = { conversationId, text: userMessage }; // Adjust accordingly
+    const messageData = { text: messages }; // Adjust accordingly
     await postFetcher("/conversation", messageData); // Send the message
     setUserMessage(""); // Reset input field
     // Optionally fetch and update the conversation with the new message

@@ -1,3 +1,4 @@
+"use client";
 // components/BotResponse.js
 import Image from 'next/image';
 

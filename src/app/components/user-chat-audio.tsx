@@ -1,3 +1,4 @@
+"use client";
 // components/UserAudio.js
 const UserResponse = ({ audioSrc, placeholder }: { audioSrc: string; placeholder: string }) => {
   return (
