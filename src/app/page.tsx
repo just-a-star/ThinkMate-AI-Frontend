@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { Button } from "../app/components/ui/button";
 import { TypewriterEffect } from "../app/components/ui/typewriter-effect";

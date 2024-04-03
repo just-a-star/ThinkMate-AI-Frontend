@@ -4,7 +4,10 @@ import "./globals.css";
 import { Rubik as FontSans } from "next/font/google";
 import { cn } from "./lib/utils";
 import Providers from "../config/Providers";
+import { Provider } from "react-redux";
 
+import { store } from "../store/store";
+import CombinedProviders from "../config/CombinedProviders";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -23,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
-        <Providers>{children}</Providers>
+        <CombinedProviders>{children}</CombinedProviders>
       </body>
     </html>
   );
