@@ -7,33 +7,69 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 import { ChevronLeft } from "lucide-react";
 import MicrophoneSVG from "../../../../public/images/microphone-chat.svg";
 import { Textarea } from "../../components/ui/textarea";
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect, SetStateAction, use, useRef } from "react";
 import Providers from "../../../config/Providers";
 import { useQuiz } from "../../services/queries";
 import { postFetcher } from "../../services/fetcher";
 import { mutate } from "swr";
 import BotResponse from "../../components/bot-chat-response";
 import UserResponse from "../../components/user-chat-audio";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
+import chatSlice, { addMessage } from "../../../store/chatSlice";
 
 export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
   const [userMessage, setUserMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
+  const [coba, setCoba] = useState({ nama: "s", id: "" });
+
+  const { messages } = useSelector((state: RootState) => state.chat);
+  const dispatch = useDispatch();
+  const quizState = useSelector((state: RootState) => state.quiz);
+  const chatState = useSelector((state: RootState) => state.chat);
+  const hasStartedConversation = useRef(false);
   useEffect(() => {
-    const startConversation = async () => {
-      const data = {
-        quiz_id: 31,
-        name: "bintang",
+    const user_name = localStorage.getItem("user_name");
+    const user_quiz_id = localStorage.getItem("user_quiz_id");
+
+    setCoba({ nama: user_name || "", id: user_quiz_id || "" });
+    if (quizState.started && !hasStartedConversation.current) {
+      const startConversation = async () => {
+        const data = {
+          quiz_id: quizState.quizDetails.id || user_quiz_id,
+          name: quizState.name || user_name,
+        };
+
+        // get req
+        // const response = await getFetcher(apiUrl, pinQuiz);
+        const response = await postFetcher("/conversation", data);
+        setConversationId(response.data.conversation_id);
+
+        dispatch(
+          addMessage({
+            type: "bot",
+            message: response.data.message,
+            audioSrc: "",
+            placeholder: "",
+            role: "",
+            id: 0,
+            CreatedAt: "",
+            UpdatedAt: "",
+            DeletedAt: "",
+            conversation_id: 0,
+          })
+        );
+
+        // setConversationId(response.data.id);
+        dispatch(setStarted(true));
       };
-      const apiUrl = `/conversation/{conversationId}`;
-      // get req
-      // const response = await getFetcher(apiUrl, pinQuiz);
-      const response = await postFetcher("/conversation", data);
-      setConversationId(response.data.id);
-    };
-    startConversation();
-  }, []);
+
+      startConversation();
+      hasStartedConversation.current = true;
+    }
+  }, [quizState.quizDetails.id, quizState.name, quizState.started, dispatch]);
 
   const handleMessageChange = (e: { target: { value: SetStateAction<string> } }) => {
     setUserMessage(e.target.value);
@@ -42,26 +78,58 @@ export default function DiscussSiswa() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (!userMessage.trim()) return; // Prevent sending empty messages
-    // Assuming '/messages' is your endpoint for sending messages
-    const messageData = { text: messages }; // Adjust accordingly
-    await postFetcher("/conversation", messageData); // Send the message
-    setUserMessage(""); // Reset input field
-    // Optionally fetch and update the conversation with the new message
+
+    const messageData = {
+      message: userMessage,
+    };
+    const apiUrl = `/conversation/${conversationId}/message`;
+
+    try {
+      const response = await postFetcher(apiUrl, messageData);
+      console.log(conversationId);
+      console.log("user message: ", userMessage);
+      if (response.data) {
+        dispatch(
+          addMessage({
+            type: "user",
+            message: userMessage,
+            audioSrc: "",
+            placeholder: "",
+            role: "",
+            id: 0,
+            CreatedAt: "",
+            UpdatedAt: "",
+            DeletedAt: "",
+            conversation_id: 0,
+          })
+        );
+
+        dispatch(
+          addMessage({
+            type: "bot",
+            message: response.data.message,
+            audioSrc: "",
+            placeholder: "",
+            role: "",
+            id: 0,
+            CreatedAt: "",
+            UpdatedAt: "",
+            DeletedAt: "",
+            conversation_id: 0,
+          })
+        );
+      }
+
+      setUserMessage("");
+    } catch (error) {
+      console.error("Error sending message: ", error);
+    }
   };
-
-  const messagess = [
-    { type: "bot", message: "Hai! Apa yang kamu tau tentang pancasila?" },
-    { type: "user", audioSrc: "https://soundcloud.com/user-831146563/cat-meowing-sound-effects", placeholder: "Bisakah kamu langsung memberikan jawabannya?" },
-    {
-      type: "bot",
-      message: "Penting untuk kamu belajar bagaimana memahami topik ini sendiri. Apa 1 kata yang terlintas dipikiranmu ketika mendengar pancasila?",
-    },
-    { type: "user", audioSrc: "https://soundcloud.com/user-831146563/cat-meowing-sound-effects", placeholder: "Dasar negara" },
-  ];
-
   return (
     <main className="container flex min-h-screen flex-col items-center py-8 px-2">
-      {/* Header - Nav */}
+      <p>{quizState.name || coba.nama} </p>
+      <p>{quizState.quizDetails.id || coba.id}</p>
+      <p>{conversationId}</p>
       <header className="container flex items-center w-full justify-between">
         <nav className="">
           <Link href="/home-pengajar" className="flex justify-start">
@@ -80,37 +148,12 @@ export default function DiscussSiswa() {
       <div className="container py-10">
         <div className="flex flex-col justify-center items-center">
           <div>
-            <div className="items-center flex">
-              <Image className="mr-2" src="/images/bonbon-girl-5.png" alt="alt" width={50} height={50} />
-
-              <div className="bg-ungu-300 rounded-lg md:w-2/3 w-full pt-3 p-6 xl:p-6 xl:text-lg">
-                <p className="font-sm text-md text-purple-800">Clara</p>
-                <p className="text-pretty">Hai Zahwa! Topik diskusi kita kali ini adalah pancasila. Apa yang kamu tau tentang pancasila?</p>
-              </div>
-            </div>
-
-            <div className="py-4">
-              {/* Audio from user */}
-              <div className="flex flex-col justify-start">
-                <p className="ml-auto xl:w-2/4 sm:w-3/4  text-start font-sm text-lg text-purple-800 py-1">You</p>
-
-                <figure className="flex flex-col ">
-                  <audio
-                    className="xl:w-2/4 sm:w-3/4 ml-auto text-blue-500 rounded-lg"
-                    controls
-                    src="https://soundcloud.com/user-831146563/cat-meowing-sound-effects?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-                  />
-                  <figcaption className="text-pretty text-right p-1 text-neutral-600 italic">Bisakah kamu langsung memberikan jawabannya?</figcaption>
-                </figure>
-              </div>
-            </div>
-
             <div>
-              {messagess.map((msg, index) =>
+              {messages.map((msg, index) =>
                 msg.type === "bot" ? (
                   <BotResponse key={index} message={msg.message ?? ""} />
                 ) : (
-                  <UserResponse key={index} audioSrc={msg.audioSrc ?? ""} placeholder={msg.placeholder ?? ""} />
+                  <UserResponse key={index} message={msg.message ?? ""} audioSrc={msg.audioSrc ?? ""} placeholder={msg.placeholder ?? ""} />
                 )
               )}
             </div>
@@ -118,7 +161,7 @@ export default function DiscussSiswa() {
             <div className="flex flex-col justify-center items-center mt-12">
               <div className="grid w-full gap-2">
                 <form onSubmit={handleSubmit} className="grid w-full gap-2">
-                  <Textarea onChange={handleMessageChange} value={userMessage} placeholder="Type your message here." />
+                  <Textarea onChange={(e) => setUserMessage(e.target.value)} value={userMessage} placeholder="Type your message here." />
                   <Button type="submit" className="bg-ungu-800 hover:bg-purple-900 py-4">
                     Send message
                   </Button>

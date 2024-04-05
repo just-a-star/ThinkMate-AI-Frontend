@@ -50,6 +50,8 @@ export default function Homes() {
         console.error("errorrr: ", error.message);
       }
     } finally {
+      localStorage.setItem("user_name", quizState.name);
+      localStorage.setItem("user_quiz_id", quizState.quizDetails.id || "");
       setIsLoading(false);
     }
   };

@@ -6,6 +6,7 @@ const initialState = {
   username: "",
   quizDetails: { pin: "", id: null, topic: "" },
   showDialog: false,
+  started: false,
 };
 
 export const quizSlice = createSlice({
@@ -27,13 +28,16 @@ export const quizSlice = createSlice({
     setShowDialog: (state, action) => {
       state.showDialog = action.payload;
     },
+    setStarted: (state, action: PayloadAction<boolean>) => {
+      state.started = action.payload;
+    },
     resetQuizState: () => {
       return initialState;
     },
   },
 });
 
-export const { setNomorAbsen, setName, setUsername, setQuizDetails, setShowDialog, resetQuizState } = quizSlice.actions;
+export const { setNomorAbsen, setName, setUsername, setQuizDetails, setShowDialog, resetQuizState, setStarted } = quizSlice.actions;
 
 export type RootState = ReturnType<typeof quizSlice.reducer>;
 
