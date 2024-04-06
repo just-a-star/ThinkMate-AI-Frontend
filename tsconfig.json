@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["./node_modules/react-audio-player-component/dist/index.d.ts"],
+    "types": ["./node_modules/react-audio-player-component/dist/index.d.ts", "dom-speech-recognition"],
     "plugins": [
       {
         "name": "next"

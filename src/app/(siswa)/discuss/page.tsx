@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
 import chatSlice, { addMessage } from "../../../store/chatSlice";
+import AudioInput from "../../components/audio-input";
 
 export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
@@ -29,6 +30,8 @@ export default function DiscussSiswa() {
   const dispatch = useDispatch();
   const quizState = useSelector((state: RootState) => state.quiz);
   const chatState = useSelector((state: RootState) => state.chat);
+
+  
   const hasStartedConversation = useRef(false);
   useEffect(() => {
     const user_name = localStorage.getItem("user_name");
@@ -41,9 +44,7 @@ export default function DiscussSiswa() {
           quiz_id: quizState.quizDetails.id || user_quiz_id,
           name: quizState.name || user_name,
         };
-
-        // get req
-        // const response = await getFetcher(apiUrl, pinQuiz);
+      
         const response = await postFetcher("/conversation", data);
         setConversationId(response.data.conversation_id);
 
@@ -167,11 +168,7 @@ export default function DiscussSiswa() {
                   </Button>
                 </form>
               </div>
-              <div className="p-2 rounded-full shadow-md bg-neutral-50">
-                <div className="p-2 text-white fill-white rounded-full border-4 border-purple-500 hover:bg-purple-500">
-                  <MicrophoneSVG width={50} height={50} color="#a855f7" />
-                </div>
-              </div>
+              <AudioInput />
             </div>
           </div>
         </div>
