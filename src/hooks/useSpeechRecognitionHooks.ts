@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 
 let recognition: any = null;
 
-if ("webkitSpeechRecognition" in window) {
-  recognition = new window.webkitSpeechRecognition();
-  recognition.continuous = true;
-  recognition.lang = "id-ID";
-}
+const initializeRecognition = () => {
+  if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
+    recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.lang = "id-ID";
+  }
+};
 
 const useSpeechRecognition = () => {
   const [text, setText] = useState<string>("");
 
   const [isListening, setIsListening] = useState<boolean>(false);
 
-useEffect((): void | (() => void) => {
+  useEffect(() => {
+    initializeRecognition();
     if (!recognition) {
       return console.log("Speech Recognition not supported");
     }
@@ -29,7 +32,7 @@ useEffect((): void | (() => void) => {
 
     recognition.onresult = onResult;
     return () => {
-        return recognition.onresult = null;
+      recognition.onresult = null;
     };
   }, []);
 
