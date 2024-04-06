@@ -35,7 +35,7 @@ export default function DiscussSiswa() {
     const user_quiz_id = localStorage.getItem("user_quiz_id");
 
     setCoba({ nama: user_name || "", id: user_quiz_id || "" });
-    if (quizState.started && !hasStartedConversation.current) {
+    if (!hasStartedConversation.current) {
       const startConversation = async () => {
         const data = {
           quiz_id: quizState.quizDetails.id || user_quiz_id,
