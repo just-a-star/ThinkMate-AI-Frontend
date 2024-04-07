@@ -7,12 +7,14 @@ const initializeRecognition = () => {
     recognition = new window.webkitSpeechRecognition();
     recognition.continuous = true;
     recognition.lang = "id-ID";
+    console.log("Speech Recognition initialized");
+  } else {
+    console.log("Speech Recognition not supported");
   }
 };
-
 const useSpeechRecognition = () => {
   const [text, setText] = useState<string>("");
-
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isListening, setIsListening] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const useSpeechRecognition = () => {
         transcript += event.results[i][0].transcript;
       }
       setText(transcript);
+      console.log(transcript);
       recognition.stop();
       setIsListening(false);
     };
@@ -37,20 +40,35 @@ const useSpeechRecognition = () => {
   }, []);
 
   const startListening = () => {
+    if (!recognition) {
+      console.error("Speech Recognition is not initialized or not supported.");
+      return;
+    }
     setText("");
+    
     setIsListening(true);
+    setIsComplete(false);
     recognition.start();
+    // dispatch(updateUserMessage(text));
   };
 
   const stopListening = () => {
     setIsListening(false);
     recognition.stop();
+    setIsComplete(true); 
   };
+
+  const resetCompletion = () => {
+    setIsComplete(false);
+  };
+  
   return {
     text,
     isListening,
     startListening,
     stopListening,
+    isComplete,
+    resetCompletion,
     hasRecognitionSupport: !!recognition,
   };
 };

@@ -25,13 +25,12 @@ export default function DiscussSiswa() {
   const [userMessage, setUserMessage] = useState("");
 
   const [coba, setCoba] = useState({ nama: "s", id: "" });
-
+  const [lastMessage, setLastMessage] = useState("");
   const { messages } = useSelector((state: RootState) => state.chat);
   const dispatch = useDispatch();
   const quizState = useSelector((state: RootState) => state.quiz);
   const chatState = useSelector((state: RootState) => state.chat);
 
-  
   const hasStartedConversation = useRef(false);
   useEffect(() => {
     const user_name = localStorage.getItem("user_name");
@@ -44,7 +43,7 @@ export default function DiscussSiswa() {
           quiz_id: quizState.quizDetails.id || user_quiz_id,
           name: quizState.name || user_name,
         };
-      
+
         const response = await postFetcher("/conversation", data);
         setConversationId(response.data.conversation_id);
 
@@ -76,24 +75,23 @@ export default function DiscussSiswa() {
     setUserMessage(e.target.value);
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (!userMessage.trim()) return; // Prevent sending empty messages
+  const sendMessage = async (message: string) => {
+    if (!message.trim() || message === lastMessage) return; // Prevent sending empty messages
 
     const messageData = {
-      message: userMessage,
+      message: message,
     };
     const apiUrl = `/conversation/${conversationId}/message`;
 
     try {
       const response = await postFetcher(apiUrl, messageData);
       console.log(conversationId);
-      console.log("user message: ", userMessage);
+      console.log("user message: ", message);
       if (response.data) {
         dispatch(
           addMessage({
             type: "user",
-            message: userMessage,
+            message: message,
             audioSrc: "",
             placeholder: "",
             role: "",
@@ -120,17 +118,23 @@ export default function DiscussSiswa() {
           })
         );
       }
-
-      setUserMessage("");
     } catch (error) {
       console.error("Error sending message: ", error);
     }
+
+    setLastMessage(message);
   };
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    await sendMessage(userMessage);
+    setUserMessage("");
+  };
+
   return (
     <main className="container flex min-h-screen flex-col items-center py-8 px-2">
-      <p>{quizState.name || coba.nama} </p>
-      <p>{quizState.quizDetails.id || coba.id}</p>
-      <p>{conversationId}</p>
+      {/* <p>{quizState.quizDetails.id || coba.id}</p> */}
+      {/* <p>{conversationId}</p> */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
           <Link href="/home-pengajar" className="flex justify-start">
@@ -139,7 +143,11 @@ export default function DiscussSiswa() {
             </Button>
           </Link>
         </nav>
-        <h1 className="text-center flex text-2xl sm:font-semibold text-ungu-800 justify-center font-bold">Ruang Diskusi</h1>
+        <div className="flex flex-col text-center">
+          <h1 className="text-center flex text-2xl sm:font-semibold text-ungu-800 justify-center font-bold">Ruang Diskusi</h1>
+          <p>Nama: {quizState.name || coba.nama} </p>
+        </div>
+
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
           <AvatarFallback>CN</AvatarFallback>
@@ -168,7 +176,7 @@ export default function DiscussSiswa() {
                   </Button>
                 </form>
               </div>
-              <AudioInput />
+              <AudioInput sendMessage={sendMessage} />
             </div>
           </div>
         </div>

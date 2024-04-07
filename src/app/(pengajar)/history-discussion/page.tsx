@@ -21,7 +21,10 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { useState } from "react";
 export default function DetailDiscussion() {
+  // const [isLoading, setIsLoading] = useState(false);
+
   const paymentsData: Payment[] = [
     {
       id: "m5gr84i9",

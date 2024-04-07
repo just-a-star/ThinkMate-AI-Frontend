@@ -3,29 +3,23 @@ import { useDispatch } from "react-redux";
 import useSpeechRecognition from "../../hooks/useSpeechRecognitionHooks";
 import MicrophoneSVG from "../../../public/images/microphone-chat.svg";
 import { addMessage } from "../../store/chatSlice";
-const AudioInput = () => {
+import { useEffect } from "react";
+const AudioInput = ({ sendMessage }: { sendMessage: (text: string) => Promise<void> }) => {
   const dispatch = useDispatch();
 
-  const { startListening, stopListening, isListening, text } = useSpeechRecognition();
+  const { startListening, stopListening, isListening, text, resetCompletion, isComplete } = useSpeechRecognition();
 
-  const sendAudioMessage = () => {
-    if (text.trim() !== "") {
-      dispatch(
-        addMessage({
-          type: "user",
-          message: text,
-          audioSrc: "",
-          placeholder: "",
-          role: "",
-          id: 0,
-          CreatedAt: "",
-          UpdatedAt: "",
-          DeletedAt: "",
-          conversation_id: 0,
-        })
-      );
-    }
-  };
+  useEffect(() => {
+    const sendAudioMessage = async () => {
+      if (isComplete && text.trim() !== "") {
+        await sendMessage(text);
+        resetCompletion();
+      }
+    };
+
+    sendAudioMessage();
+  }, [isComplete, text, sendMessage, resetCompletion]);
+
   return (
     <div className="p-2 rounded-full shadow-md bg-neutral-50">
       <div
@@ -35,7 +29,7 @@ const AudioInput = () => {
         <MicrophoneSVG width={50} height={50} color="#a855f7" />
       </div>
       {isListening && (
-        <button className="text-sm text-gray-600 mt-2" onClick={sendAudioMessage}>
+        <button className="text-sm text-gray-600 mt-2" onClick={stopListening}>
           Stop and send
         </button>
       )}
