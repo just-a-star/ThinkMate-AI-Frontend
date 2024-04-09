@@ -16,7 +16,8 @@ const config = {
       colors: {
         // Custom colors
         abu: {
-          300: "#FDFCFF"
+          100: "#9D9DA6",
+          300: "#FDFCFF",
         },
         ungu: {
           300: "#E3E3F1",

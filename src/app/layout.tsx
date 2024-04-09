@@ -13,12 +13,9 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-
-
 export const metadata: Metadata = {
   title: "ThinkMate AI",
   description: "Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa",
-  
 };
 
 export default function RootLayout({
@@ -28,7 +25,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <CombinedProviders>{children}</CombinedProviders>
       </body>

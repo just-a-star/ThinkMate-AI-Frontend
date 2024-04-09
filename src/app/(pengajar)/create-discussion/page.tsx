@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useState } from "react";
 import { postFetcher } from "../../services/fetcher";
 import { mutate } from "swr";
+import GuruNav from "../../components/guru-nav";
 
 export default function CreateDiscussion() {
   // Generate Quiz PIN
@@ -52,8 +53,13 @@ export default function CreateDiscussion() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-12">
+      {/* Title */}
+      <h1 className="text-4xl font-black mb-5">ThinkMate AI</h1>
+
+      {/* Nav */}
+      <GuruNav />
       {/* Hero */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-8">
         <Image src="/images/smiling-paper.png" alt="ThinkMateAI Logo" width={256} height={256} priority />
         <h1 className="text-center text-4xl font-semibold mt-8">
           Create a new
