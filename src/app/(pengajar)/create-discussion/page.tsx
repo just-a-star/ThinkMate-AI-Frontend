@@ -68,6 +68,7 @@ export default function CreateDiscussion() {
         <p className="py-6 text-center text-md text-slate-500 text-pretty">
           Untuk memulai sebuah diskusi mohon isi topik pada kolom yang telah tersedia di bawah ini, harap gunakan bahasa yang deskriptif
         </p>
+        {/* <p className="py-6 text-center text-md text-slate-500 text-pretty">Mau diskusi apa hari ini?</p> */}
       </div>
 
       {/* Form PIN */}

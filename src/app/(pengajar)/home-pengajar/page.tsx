@@ -8,23 +8,29 @@ export default function HomePengajar() {
       <div className="flex flex-col items-center text-center  ">
         <Image src="/images/bonbon-girl-5.png" alt="ThinkMateAI Logo" width={200} height={200} priority />
         <h1 className="text-center text-4xl text-wrap font-semibold mt-8">
-          Welcome to
-          <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span>
+          Welcome back!
+          {/* <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span> */}
         </h1>
         <p className="py-6 text-pretty text-slate-500 block">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
       </div>
 
       {/* Form PIN */}
       <div className="flex flex-col justify-start mt-1">
-        <h2 className="text-xl text-slate-700">PIN disediakan pengajar</h2>
-        <input type="text" placeholder="Masukkan PIN" className="px-10 p-4 border border-slate-300 rounded-lg" />
-
+        <p className="text-lg mb-1 text-slate-700">Email Address</p>
+        <input type="text" placeholder="Enter Email" className="text-left pl-5 pr-12 p-4 border border-slate-300 rounded-lg" />
+        <p className="text-lg mb-1 text-slate-700">Password</p>
+        <input type="password" placeholder="Enter Password" className="p-4 pl-5 pr-12 border border-slate-300 rounded-lg" />
+        <div className="flex justify-end">
+          <a href="#" className="text-purple-800 text-md font-medium p-2">
+            Forgot Password?
+          </a>
+        </div>
         <Link className="flex flex-col" href="/create-discussion">
-          <Button className="bg-purple-900 text-white font-semibold py-6 text-lg rounded-lg mt-4">Login as Teachers</Button>
+          <Button className="bg-purple-900 text-white font-semibold py-7 text-lg rounded-lg mt-4 hover:bg-purple-600">Login as Teacher</Button>
         </Link>
         <p className="text-center text-slate-500 mt-4">
           Belum punya akun?{" "}
-          <a href="#" className="text-purple-800">
+          <a href="#" className="text-purple-800 font-medium">
             Daftar disini
           </a>
         </p>
