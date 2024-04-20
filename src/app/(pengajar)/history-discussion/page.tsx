@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonDialog } from "../../components/btn-generate-dialog";
@@ -21,116 +22,26 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
-import { useState } from "react";
-export default function DetailDiscussion() {
-  // const [isLoading, setIsLoading] = useState(false);
+import { useEffect, useState } from "react";
+import { getFetcher } from "../../services/fetcher";
+export default function HistoryDiscussion() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [conversationData, setConversationData] = useState([]);
 
-  const paymentsData: Payment[] = [
-    {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@yahoo.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@gmail.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@gmail.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@gmail.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@hotmail.com",
-    },
-  ];
+  useEffect(() => {
+    const conversation_id = 31;
+    const fetchData = async () => {
+    const response = await getFetcher(`/quiz/${conversation_id}/conversation`);
+    // const data = await response();
+    //         setConversationData(data.data);
+    // };
+    setConversationData(response);
+    
+    }
+    fetchData();
+    
 
-  const paymentColumns: ColumnDef<Payment>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
-    },
-    {
-      accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-            Email
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-    },
-    {
-      accessorKey: "amount",
-      header: () => <div className="text-right">Amount</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"));
-
-        // Format the amount as a dollar amount
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-right font-medium">{formatted}</div>;
-      },
-    },
-    {
-      id: "actions",
-      enableHiding: false,
-      cell: ({ row }) => {
-        const payment = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
-  ];
-
+  }, []);
   return (
     <main className="container flex min-h-screen flex-col items-center p-24">
       {/* Header - Nav */}
@@ -154,7 +65,8 @@ export default function DetailDiscussion() {
         <Input className="w-1/3 mt-4 p-4  " placeholder="Cari history kelas di sini!" />
 
         {/* Each item */}
-        <div className="flex flex-col bg-purple-50 rounded-lg mt-2 p-4">
+        {/* {conversationData.map((item) => ( */}
+        <div  className="flex flex-col bg-purple-50 rounded-lg mt-2 p-4">
           <div className="flex items-center ">
             <Image className="bg-white rounded-lg p-2" src="/images/fi-br-megaphone.svg" alt="alt" width={50} height={50} />
             <div className="p-2">
@@ -180,6 +92,7 @@ export default function DetailDiscussion() {
             <Button className="justify-end bg-purple-900 hover:bg-purple-800 rounded-2xl">Completed</Button>
           </div>
         </div>
+        {/* ))} */}
 
         <div className="flex flex-col bg-purple-50 rounded-lg  p-4 mt-4">
           <div className="flex items-center ">
@@ -215,3 +128,4 @@ export default function DetailDiscussion() {
     </main>
   );
 }
+

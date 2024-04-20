@@ -22,112 +22,32 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { useEffect, useState } from "react";
+import { getFetcher } from "../../services/fetcher";
+import { ConversationItem } from "../../types/conversationItem";
 export default function DetailDiscussion() {
-  const paymentsData: Payment[] = [
-    {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "success",
-      email: "ken99@yahoo.com",
-    },
-    {
-      id: "3u1reuv4",
-      amount: 242,
-      status: "success",
-      email: "Abe45@gmail.com",
-    },
-    {
-      id: "derv1ws0",
-      amount: 837,
-      status: "processing",
-      email: "Monserrat44@gmail.com",
-    },
-    {
-      id: "5kma53ae",
-      amount: 874,
-      status: "success",
-      email: "Silas22@gmail.com",
-    },
-    {
-      id: "bhqecj4p",
-      amount: 721,
-      status: "failed",
-      email: "carmella@hotmail.com",
-    },
-  ];
+  const [conversationData, setConversationData] = useState<ConversationItem[]>([]);
 
-  const paymentColumns: ColumnDef<Payment>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />,
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
-    },
-    {
-      accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-            Email
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-    },
-    {
-      accessorKey: "amount",
-      header: () => <div className="text-right">Amount</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"));
+  useEffect(() => {
+    const conversation_id = 31;
+    const fetchData = async () => {
+      const response = await getFetcher(`/quiz/${conversation_id}/conversation`);
+      // const data = await response();
+      //         setConversationData(data.data);
+      // };
+      setConversationData(response.data);
+    };
+    fetchData();
+  }, []);
 
-        // Format the amount as a dollar amount
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-
-        return <div className="text-right font-medium">{formatted}</div>;
-      },
-    },
-    {
-      id: "actions",
-      enableHiding: false,
-      cell: ({ row }) => {
-        const payment = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
-  ];
+  const formatTime = (isoString: string | number | Date) => {
+    const date = new Date(isoString);
+    return new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", hour12: false }).format(date);
+  };
+  const parseStudentName = (studentName: string) => {
+    const parts = studentName.split(" - ");
+    return parts; // Returns an array where index 0 is the name and index 1 is the ID (if present)
+  };
 
   return (
     <main className="container flex min-h-screen flex-col items-center py-8 px-2">
@@ -157,23 +77,34 @@ export default function DetailDiscussion() {
         {/* <DataTableDiscussion data={paymentsData} columns={paymentColumns} /> */}
 
         {/* List discussion */}
-        <div className="flex justify-start w-full pb-4">
-          <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
-            <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
-          </div>
 
-          <div className="flex flex-col pl-2">
-            <h2>
-              Diskusi Alma Ziza <span className="text-purple-80 sm:hidden md:hidden text-semobold overflow-hidden">- 25</span>
-            </h2>
-            <h3 className="items-left text-slate-500">
-              22/07/2022 - <span>11:34</span>
-            </h3>
-          </div>
-          <div className="flex items-center ml-auto">
-            <Button className="justify-end bg-purple-900 hover:bg-purple-800 rounded-2xl">Completed</Button>
-          </div>
-        </div>
+        {/* please go through each data */}
+        {conversationData.length > 0 ? (
+          conversationData.map((item) => {
+            const [name, studentId] = parseStudentName(item.student_name);
+            return (
+              <div key={item.ID} className="flex justify-start w-full pb-4">
+                <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
+                  <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
+                </div>
+
+                <div className="flex flex-col pl-2">
+                  <h2>
+                    Diskusi {name} <span className="text-purple-800  text-semobold overflow-hidden"> {studentId ? `- ${studentId}` : ""}</span>
+                  </h2>
+                  <h3 className="items-left text-slate-500">
+                    {formatTime(item.CreatedAt)}- <span>{formatTime(item.UpdatedAt)}</span>
+                  </h3>
+                </div>
+                <div className="flex items-center ml-auto">
+                  <Button className="justify-end bg-purple-900 hover:bg-purple-800 rounded-2xl">Completed</Button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div>No data found</div>
+        )}
 
         <div className="flex justify-start w-full">
           <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">

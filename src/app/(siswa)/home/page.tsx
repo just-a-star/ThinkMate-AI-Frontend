@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { useState } from "react";
-import { getFetcher } from "../../services/fetcher";
+import { postFetcher } from "../../services/fetcher";
 import { mutate } from "swr";
 import { useDispatch, useSelector } from "react-redux";
 import quizSlice, { setName, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
@@ -31,7 +31,7 @@ export default function Homes() {
     try {
       const apiUrl = `/quiz?pin=${pinQuiz.pin}`;
       // get req
-      const response = await getFetcher(apiUrl, pinQuiz);
+      const response = await postFetcher(apiUrl, pinQuiz);
       console.log("pin quiz: ", pinQuiz);
       if (response && response.data) {
         dispatch(
