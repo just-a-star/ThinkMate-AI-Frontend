@@ -15,7 +15,7 @@ export const postFetcher = (url: string, data: any) => {
 };
 
 // handle get req
-export const getFetcher = (url: string) => {
+export const getFetcher = (url: string, data: any) => {
   return axiosInstance.get(url).then((res) => res.data);
 };
 

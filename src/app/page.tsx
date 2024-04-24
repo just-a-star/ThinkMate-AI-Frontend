@@ -11,14 +11,14 @@ export default function Home() {
       text: "Welcome",
       className: "text-white text-4xl ",
     },
-    { text: "to!", className: "text-white text-4xl" },
+    { text: "to", className: "text-white text-4xl" },
 
     {
       text: "Thinkmate",
       className: "text-purple-600 text-4xl",
     },
     {
-      text: "AI",
+      text: "AI!",
       className: "text-purple-600 text-4xl ",
       cursorClassName: "text-purple-600",
     },

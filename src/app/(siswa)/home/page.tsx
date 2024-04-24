@@ -7,14 +7,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { useState } from "react";
-import { postFetcher } from "../../services/fetcher";
+import { getFetcher, postFetcher } from "../../services/fetcher";
 import { mutate } from "swr";
 import { useDispatch, useSelector } from "react-redux";
 import quizSlice, { setName, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
 
 import { RootState } from "../../../store/store";
 
-export default function Homes() {
+export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
   const [pinQuiz, setPinQuiz] = useState({ pin: "" });
   const dispatch = useDispatch();
@@ -28,12 +28,29 @@ export default function Homes() {
     e.preventDefault();
     setIsLoading(true);
 
+    dispatch(
+      setQuizDetails({
+        pin: "",
+        id: "",
+        topic: "",
+      })
+    );
+    dispatch(setName(""));
+    dispatch(setNomorAbsen(""));
+    dispatch(setUsername(""));
+
+    if (!pinQuiz.pin) {
+      alert("Please enter a PIN.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const apiUrl = `/quiz?pin=${pinQuiz.pin}`;
       // get req
-      const response = await postFetcher(apiUrl, pinQuiz);
+      const response = await getFetcher(apiUrl, pinQuiz);
       console.log("pin quiz: ", pinQuiz);
-      if (response && response.data) {
+      if (response && response.data && response.data.pin === pinQuiz.pin) {
         dispatch(
           setQuizDetails({
             pin: response.data.pin,
@@ -56,15 +73,24 @@ export default function Homes() {
     }
   };
 
-  const handleInputChangeDetails = (e: { target: { name: string; value: any } }) => {
+  const handleInputChangeDetails = (e: { target: { name: string; value: string } }) => {
+    console.log("e.target.name: ", e.target.name);
+    console.log("e.target.value: ", e.target.value);
+
     const actionMap: { [key: string]: (value: string) => void } = {
       name: (value: string) => dispatch(setName(value)),
-      nomor_absen: (value: string) => dispatch(setNomorAbsen(value)),
+      nomor_absen: (value: string) => {
+        // Check if value is a number
+        if (!isNaN(Number(value)) && value.trim() !== "") {
+          dispatch(setNomorAbsen(value));
+        }
+      },
       username: (value: string) => dispatch(setUsername(value)),
     };
 
+    // Execute the action if the field has a corresponding action and the value is not empty
     const action = actionMap[e.target.name];
-    if (action) {
+    if (action && e.target.value.trim() !== "") {
       action(e.target.value);
     }
   };
