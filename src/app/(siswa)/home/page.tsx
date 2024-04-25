@@ -48,7 +48,7 @@ export default function HomeSiswa() {
     try {
       const apiUrl = `/quiz?pin=${pinQuiz.pin}`;
       // get req
-      const response = await getFetcher(apiUrl, pinQuiz);
+      const response = await getFetcher(apiUrl);
       console.log("pin quiz: ", pinQuiz);
       if (response && response.data && response.data.pin === pinQuiz.pin) {
         dispatch(
