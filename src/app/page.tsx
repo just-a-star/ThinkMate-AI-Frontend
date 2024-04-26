@@ -1,9 +1,9 @@
-
 import Image from "next/image";
 import { Button } from "../app/components/ui/button";
 import { TypewriterEffect } from "../app/components/ui/typewriter-effect";
 import { SparklesCore } from "../app/components/ui/sparkles";
 import Link from "next/link";
+import ContactUsButton from "./components/contact-us-button";
 export default function Home() {
   // Title effects
   const words = [
@@ -55,6 +55,10 @@ export default function Home() {
       </div>
       <div className="flex flex-col z-20">
         <p className="text-neutral-300 text-sm pt-2 relative">Mau masuk sebagai siapa?</p>
+      </div>
+      {/* Pusat bantuan button */}
+      <div className="sm:fixed flex mt-5 justify-center items-center relative sm:bottom-0 sm:right-0 sm:mb-10 sm:mr-10">
+        <ContactUsButton />
       </div>
     </main>
   );
