@@ -14,7 +14,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/login",
+        source: "/pengajar/login",
         destination: "/auth/login",
       },
     ];
