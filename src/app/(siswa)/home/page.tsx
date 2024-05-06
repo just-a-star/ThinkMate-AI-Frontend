@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { AlertDestructiveWrongPin } from "../../components/alert-destructive-wrong-pin";
 import WrongPinDialog from "../../components/wrong-pin-dialog";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,14 +27,16 @@ export default function HomeSiswa() {
   const fadeOut = {
     hidden: { opacity: 0, transition: { duration: 0.5 } },
     visible: { opacity: 1, transition: { duration: 0.5 } },
-    exit: { opacity: 0, transition: { duration: 0.5 } }
+    exit: { opacity: 0, transition: { duration: 0.5 } },
   };
-  
+
   // dijalanin setiap refresh
   useEffect(() => {
     // Reset states when the component mounts (i.e., when the website is opened)
     setPinQuiz("");
+
     dispatch(
+      setName(""),
       setQuizDetails({
         pin: "",
         id: "",
@@ -158,28 +160,18 @@ export default function HomeSiswa() {
         </p>
       </div>
       <div className="sm:fixed flex mt-5 justify-center items-center relative sm:bottom-0 sm:right-0 sm:mb-10 sm:mr-10">
-      <AnimatePresence>
-        {showErrorAlert && (
-          <motion.div
-            variants={fadeOut}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
-          </motion.div>
-        )}
-        {showErrorPinAlert && (
-          <motion.div
-            variants={fadeOut}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <AlertDestructiveWrongPin title="Error Input" description="PIN harus berupa angka dan maksimal 4 digit." />
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {showErrorAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
+            </motion.div>
+          )}
+          {showErrorPinAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error Input" description="PIN harus berupa angka dan maksimal 4 digit." />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </main>
   );

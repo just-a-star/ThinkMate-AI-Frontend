@@ -33,6 +33,10 @@ export default function DiscussSiswa() {
 
   const hasStartedConversation = useRef(false);
   useEffect(() => {
+    // Clear previous message
+    dispatch(
+      addMessage({ type: "", message: "", audioSrc: "", placeholder: "", role: "", id: 0, CreatedAt: "", UpdatedAt: "", DeletedAt: "", conversation_id: 0 })
+    );
     const user_name = localStorage.getItem("user_name");
     const user_quiz_id = localStorage.getItem("user_quiz_id");
 
