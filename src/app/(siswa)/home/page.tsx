@@ -17,7 +17,8 @@ import Link from "next/link";
 export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
   const [pinQuiz, setPinQuiz] = useState("");
-
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showErrorPinAlert, setShowErrorPinAlert] = useState(false);
@@ -36,7 +37,6 @@ export default function HomeSiswa() {
     setPinQuiz("");
 
     dispatch(
-      setName(""),
       setQuizDetails({
         pin: "",
         id: "",
@@ -44,6 +44,18 @@ export default function HomeSiswa() {
       })
     );
   }, [dispatch]);
+
+  const handleInputModalChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+
+    if (name === "name") {
+      setFullName(value);
+      localStorage.setItem("quiz_nama lengkap", value);
+    } else if (name === "username") {
+      setUsername(value);
+      localStorage.setItem("quiz_username", value);
+    }
+  };
 
   const handleInputChange = (e: { target: { value: any } }) => {
     const pin = e.target.value;
@@ -136,8 +148,21 @@ export default function HomeSiswa() {
                 </DialogDescription>
 
                 <div className="pt-4 justify-center items-center flex flex-col">
-                  <Input type="text" name="name" placeholder="Nama Lengkap" required className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2" />
-                  <Input type="text" placeholder="Username (Optional)" className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2" />
+                  <Input
+                    type="text"
+                    onChange={handleInputModalChange}
+                    name="name"
+                    placeholder="Nama Lengkap"
+                    required
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
+                  <Input
+                    type="text"
+                    name="username"
+                    onChange={handleInputModalChange}
+                    placeholder="Username (Optional)"
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
                   <label className="text-sm text-neutral-500 font-normal">Tips: username digunakan AI untuk memanggil kamu!</label>
                 </div>
               </div>

@@ -17,7 +17,7 @@ import UserResponse from "../../components/user-chat-audio";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
-import chatSlice, { addMessage } from "../../../store/chatSlice";
+import chatSlice, { addMessage, resetChatState } from "../../../store/chatSlice";
 import AudioInput from "../../components/audio-input";
 
 export default function DiscussSiswa() {
@@ -33,12 +33,8 @@ export default function DiscussSiswa() {
 
   const hasStartedConversation = useRef(false);
   useEffect(() => {
-    // Clear previous message
-    dispatch(
-      addMessage({ type: "", message: "", audioSrc: "", placeholder: "", role: "", id: 0, CreatedAt: "", UpdatedAt: "", DeletedAt: "", conversation_id: 0 })
-    );
-    const user_name = localStorage.getItem("user_name");
-    const user_quiz_id = localStorage.getItem("user_quiz_id");
+    const user_name = localStorage.getItem("quiz_nama lengkap");
+    const user_quiz_id = localStorage.getItem("quiz_username");
 
     setCoba({ nama: user_name || "", id: user_quiz_id || "" });
     if (!hasStartedConversation.current) {
@@ -141,7 +137,7 @@ export default function DiscussSiswa() {
       {/* <p>{conversationId}</p> */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
-          <Link href="/home-pengajar" className="flex justify-start">
+          <Link href="/home" className="flex justify-start">
             <Button variant="outline" size="icon">
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -149,7 +145,7 @@ export default function DiscussSiswa() {
         </nav>
         <div className="flex flex-col text-center">
           <h1 className="text-center flex text-2xl sm:font-semibold text-ungu-800 justify-center font-bold">Ruang Diskusi</h1>
-          <p>Nama: {quizState.name || coba.nama} </p>
+          <p>Nama: {coba.nama} </p>
         </div>
 
         <Avatar>
