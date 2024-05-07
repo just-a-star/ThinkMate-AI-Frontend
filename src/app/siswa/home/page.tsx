@@ -13,6 +13,7 @@ import WrongPinDialog from "../../components/wrong-pin-dialog";
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from "next/image";
 import Link from "next/link";
+import {cookies} from "next/headers";
 
 export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,8 @@ export default function HomeSiswa() {
   const [showErrorPinAlert, setShowErrorPinAlert] = useState(false);
   const dispatch = useDispatch();
   const quizState = useSelector((state: RootState) => state.quiz);
+
+  
 
   const fadeOut = {
     hidden: { opacity: 0, transition: { duration: 0.5 } },
@@ -102,6 +105,7 @@ export default function HomeSiswa() {
           Welcome to
           <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span>
         </h1>
+        
         <p className="py-6 text-pretty text-slate-500 block">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
       </div>
 

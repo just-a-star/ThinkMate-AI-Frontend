@@ -1,7 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
+import { cookies } from "next/headers";
+import { useEffect, useState } from "react";
+
 export default function HomePengajar() {
+  const [authToken, setAuthToken] = useState();
+
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {/* Hero */}
@@ -11,6 +19,7 @@ export default function HomePengajar() {
           Welcome back!
           {/* <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span> */}
         </h1>
+        <h2>{authToken ?? "gak ada"} tes</h2>
         <p className="py-6 text-pretty text-slate-500 block">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
       </div>
 

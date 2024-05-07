@@ -1,15 +1,15 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonDialog } from "../../components/btn-generate-dialog";
-import { Button } from "../../components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { DataTableDiscussion } from "../../components/data-table-discussion";
-import { Payment } from "../../components/data-table-discussion"; // move this to types folder later
+import { ButtonDialog } from "../../../components/btn-generate-dialog";
+import { Button } from "../../../components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../components/ui/dialog";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { DataTableDiscussion } from "../../../components/data-table-discussion";
+import { Payment } from "../../../components/data-table-discussion"; // move this to types folder later
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "../../components/ui/checkbox";
+import { Checkbox } from "../../../components/ui/checkbox";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { ChevronLeft } from "lucide-react";
 import {
@@ -20,11 +20,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+} from "../../../components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar";
 import { useEffect, useState } from "react";
-import { getFetcher } from "../../services/fetcher";
-import { ConversationItem } from "../../types/conversationItem";
+import { getFetcher } from "../../../services/fetcher";
+import { ConversationItem } from "../../../types/conversationItem";
 export default function DetailDiscussion() {
   const [conversationData, setConversationData] = useState<ConversationItem[]>([]);
 
@@ -77,8 +77,6 @@ export default function DetailDiscussion() {
         {/* <DataTableDiscussion data={paymentsData} columns={paymentColumns} /> */}
 
         {/* List discussion */}
-
-        {/* please go through each data */}
         {conversationData.length > 0 ? (
           conversationData.map((item) => {
             const [name, studentId] = parseStudentName(item.student_name);

@@ -77,7 +77,7 @@ export default function DiscussSiswa() {
 
   const sendMessage = async (message: string) => {
     if (!message.trim() || message === lastMessage) return; // Prevent sending empty messages
-
+    console.log("user message: ", message);
     const messageData = {
       message: message,
     };

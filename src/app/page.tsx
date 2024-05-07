@@ -49,7 +49,7 @@ export default function Home() {
         <Link href="/home">
           <Button className="bg-white text-purple-800 p-6 px-12 rounded-lg mt-2 hover:bg-purple-200 hover:text-purple-950">Siswa</Button>
         </Link>
-        <Link href="home-pengajar">
+        <Link href="/pengajar/login">
           <Button className="bg-white text-purple-800 p-6 px-12 rounded-lg mt-2 hover:bg-purple-200 hover:text-purple-950">Guru</Button>
         </Link>
       </div>

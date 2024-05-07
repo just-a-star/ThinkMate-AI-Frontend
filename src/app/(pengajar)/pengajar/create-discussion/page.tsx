@@ -2,14 +2,14 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonDialog } from "../../components/btn-generate-dialog";
-import { Button } from "../../components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
+import { ButtonDialog } from "../../../components/btn-generate-dialog";
+import { Button } from "../../../components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../components/ui/dialog";
 
 import { useState } from "react";
-import { postFetcher } from "../../services/fetcher";
+import { postFetcher } from "../../../services/fetcher";
 import { mutate } from "swr";
-import GuruNav from "../../components/guru-nav";
+import GuruNav from "../../../components/guru-nav";
 
 export default function CreateDiscussion() {
   // Generate Quiz PIN
