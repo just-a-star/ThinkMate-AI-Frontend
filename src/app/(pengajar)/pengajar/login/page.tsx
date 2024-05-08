@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { NextApiRequest } from "next";
 import axios from "axios";
 
-export default function LoginPengajar() {
+export default function RegisterPengajar() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function LoginPengajar() {
     try {
       const response = await postFetcher("/login", formData);
       if (response.token) {
-        await storeToken({ token: response.token, refresh_token: response.refresh_token }); 
+        await storeToken({ token: response.token, refresh_token: response.refresh_token });
         router.push("/pengajar/create-discussion");
         alert("Login Successful");
       } else {
@@ -92,13 +92,11 @@ export default function LoginPengajar() {
 
         <p className="text-center text-slate-500 mt-4">
           Belum punya akun?{" "}
-          <a href="#" className="text-purple-800 font-medium">
+          <Link href="/pengajar/register" className="text-purple-800 font-medium">
             Daftar disini
-          </a>
+          </Link>
         </p>
       </div>
     </main>
   );
 }
-
-

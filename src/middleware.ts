@@ -18,6 +18,20 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    if (request.nextUrl.pathname === "/pengajar/register") {
+        const accessToken = request.cookies.get("accessToken");
+        console.log("Access Token on login page:", accessToken);
+
+        if (accessToken) {
+            console.log("Token found, redirecting to create-discussion...");
+            const targetUrl = new URL("/pengajar/create-discussion", request.url);
+            return NextResponse.redirect(targetUrl);
+        }
+
+        console.log("No token found, access to login page granted.");
+        return NextResponse.next();
+    }
+
     // Check all other /pengajar routes
     if (request.nextUrl.pathname.startsWith("/pengajar")) {
         const accessToken = request.cookies.get("accessToken");

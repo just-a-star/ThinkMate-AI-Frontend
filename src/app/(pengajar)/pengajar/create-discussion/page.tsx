@@ -10,7 +10,9 @@ import { useState } from "react";
 import { postFetcher } from "../../../services/fetcher";
 import { mutate } from "swr";
 import GuruNav from "../../../components/guru-nav";
-
+import { ChevronLeft } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/src/app/components/ui/avatar";
+import { DropdownMenuUser } from "@/src/app/components/dropdown-user";
 export default function CreateDiscussion() {
   // Generate Quiz PIN
   const [quizData, setData] = useState({ topic: "" });
@@ -53,8 +55,18 @@ export default function CreateDiscussion() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-12">
+      <header className="container flex items-center w-full justify-between">
+        <nav className="">
+          <Link href="/pengajar/create-discussion" className="flex justify-start">
+            <Button variant="outline" size="icon">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+        </nav>
+        <h1 className="text-4xl font-black mb-5">ThinkMate AI</h1>
+        <DropdownMenuUser />
+      </header>
       {/* Title */}
-      <h1 className="text-4xl font-black mb-5">ThinkMate AI</h1>
 
       {/* Nav */}
       <GuruNav />

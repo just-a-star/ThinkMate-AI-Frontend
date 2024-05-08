@@ -25,3 +25,8 @@ export async function storeToken(request: StoreTokenRequest) {
     secure: true,
   });
 }
+
+export async function removeToken() {
+  cookies().delete("accessToken");
+  cookies().delete("refreshToken");
+}

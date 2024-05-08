@@ -13,7 +13,7 @@ const GuruNav = () => {
         </Link>
       </div>
       <div className="p-2 md:px-12 xl:px-20 rounded-2xl text-abu-100">
-        <Link href="/history-discussion">History</Link>
+        <Link href="/pengajar/history-discussion">History</Link>
       </div>
     </nav>
   );
