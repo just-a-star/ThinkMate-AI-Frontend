@@ -10,15 +10,15 @@ const nextConfig = {
     return config;
   },
 
-  // // Adjusting routes
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/pengajar/login",
-  //       destination: "/auth/login",
-  //     },
-  //   ];
-  // },
+  // Adjusting routes
+  async rewrites() {
+    return [
+      {
+        source: "/api/auth/token/route.ts",
+        destination: "/api/auth/token",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

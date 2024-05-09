@@ -15,6 +15,7 @@ export async function storeToken(request: StoreTokenRequest) {
     httpOnly: true,
     sameSite: "strict",
     secure: true,
+    maxAge: 60 * 60 * 1 * 1,
   });
 
   cookies().set({
@@ -23,10 +24,15 @@ export async function storeToken(request: StoreTokenRequest) {
     httpOnly: true,
     sameSite: "strict",
     secure: true,
+    maxAge: 60 * 60 * 1 * 1,
   });
 }
 
 export async function removeToken() {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
+}
+
+export async function getToken() {
+  return cookies().get("accessToken")?.value;
 }

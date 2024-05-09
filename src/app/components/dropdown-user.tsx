@@ -17,7 +17,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { removeToken } from "../lib/auth";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export function DropdownMenuUser() {
   const router = useRouter();
@@ -28,7 +28,11 @@ export function DropdownMenuUser() {
     } catch {
       console.error("Error removing token");
     } finally {
-      router.push("/pengajar/login");
+      // router.push("/pengajar/login");
+      // refresh the page
+      router.refresh();
+      
+      redirect("/pengajar/login");
     }
   }
   return (

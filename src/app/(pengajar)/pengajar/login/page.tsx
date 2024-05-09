@@ -10,8 +10,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { NextApiRequest } from "next";
 import axios from "axios";
+import { setPengajar } from "@/src/store/pengajarSlice";
+import { decodeToken } from "@/src/app/lib/decodeToken";
+import { useDispatch } from "react-redux";
 
 export default function RegisterPengajar() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const router = useRouter();
@@ -22,12 +26,20 @@ export default function RegisterPengajar() {
       const response = await postFetcher("/login", formData);
       if (response.token) {
         await storeToken({ token: response.token, refresh_token: response.refresh_token });
+
+        const decoded = decodeToken(response.token);
+        if (decoded) {
+          dispatch(setPengajar({ id: decoded.id, email: decoded.email, exp: decoded.exp, name: "", username: "" }));
+        }
+        
+
         router.push("/pengajar/create-discussion");
         alert("Login Successful");
       } else {
         throw new Error("No token received"); // Login failed
       }
     } catch (error) {
+      alert("Login failed, please try again");
       console.error("error logging in", error);
     } finally {
       setIsLoading(false);
