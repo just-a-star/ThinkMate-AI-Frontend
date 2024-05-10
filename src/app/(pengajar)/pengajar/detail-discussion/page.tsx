@@ -31,20 +31,20 @@ export default function DetailDiscussion() {
   const [conversationData, setConversationData] = useState<ConversationItem[]>([]);
   const searchParams = useSearchParams();
 
-  const pin = searchParams.get("pin");
+  const id = searchParams.get("id");
 
   useEffect(() => {
-    if (pin) {
-      // Make sure the pin is not undefined
+    if (id) {
+      // Make sure the id is not undefined
       const fetchData = async () => {
-        const response = await getFetcher(`/quiz/${pin}/conversation`);
+        const response = await getFetcher(`/quiz/${id}/conversation`);
         setConversationData(response.data);
       };
       fetchData();
     } else {
-      alert("No pin or wrong pin provided ");
+      alert("No id or wrong id provided ");
     }
-  }, [pin]);
+  }, [id]);
 
   const formatTime = (isoString: string | number | Date) => {
     const date = new Date(isoString);
@@ -73,7 +73,7 @@ export default function DetailDiscussion() {
       <div className="container ">
         <div className="flex py-4 justify-start flex-col w-full pt-8">
           <h1 className="items-start text-2xl font-small text-purple-800">
-            Diskusi Pancasila - <span className="text-black font-semibold">{pin}</span>
+            Diskusi Pancasila - <span className="text-black font-semibold">{id}</span>
           </h1>
           <p className="text-neutral-600">Detail discussions done by students will appear here</p>
         </div>

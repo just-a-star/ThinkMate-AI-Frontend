@@ -124,7 +124,7 @@ export default function CreateDiscussion() {
                 <DialogDescription>Yuk, bagikan PIN ini ke siswa!</DialogDescription>
               </div>
               <DialogFooter className="mt-4">
-                <Link href="/pengajar/detail-discussion" className="w-full ">
+                <Link href={`/pengajar/detail-discussion?id=${quizResponse.id}`} className="w-full ">
                   <Button className="text-white w-full items-center  bg-purple-800" type="submit">
                     Pantau detail diskusi
                   </Button>
