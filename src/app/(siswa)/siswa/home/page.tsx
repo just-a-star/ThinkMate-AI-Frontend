@@ -2,21 +2,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mutate } from "swr";
-import { getFetcher } from "../../services/fetcher";
-import { RootState } from "../../../store/store";
-import { setName, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
-import { Button } from "../../components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Input } from "../../components/ui/input";
-import { AlertDestructiveWrongPin } from "../../components/alert-destructive-wrong-pin";
-import WrongPinDialog from "../../components/wrong-pin-dialog";
+import { getFetcher } from "../../../services/fetcher";
+import { RootState } from "../../../../store/store";
+import { setName, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../../store/quizSlice";
+import { Button } from "../../../components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../components/ui/dialog";
+import { Input } from "../../../components/ui/input";
+import { AlertDestructiveWrongPin } from "../../../components/alert-destructive-wrong-pin";
+import WrongPinDialog from "../../../components/wrong-pin-dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
   const [pinQuiz, setPinQuiz] = useState("");
+
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -29,6 +31,7 @@ export default function HomeSiswa() {
     hidden: { opacity: 0, transition: { duration: 0.5 } },
     visible: { opacity: 1, transition: { duration: 0.5 } },
     exit: { opacity: 0, transition: { duration: 0.5 } },
+    
   };
 
   // dijalanin setiap refresh
@@ -116,6 +119,7 @@ export default function HomeSiswa() {
           Welcome to
           <span className="text-purple-800 text-nowrap block"> ThinkMate AI!</span>
         </h1>
+
         <p className="py-6 text-pretty text-slate-500 block">Teman Diskusi untuk Melatih Berpikir Kritis dan Pemahaman Membaca Siswa </p>
       </div>
 
@@ -163,11 +167,26 @@ export default function HomeSiswa() {
                     placeholder="Username (Optional)"
                     className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
                   />
+                  <Input
+                    type="text"
+                    onChange={handleInputModalChange}
+                    name="name"
+                    placeholder="Nama Lengkap"
+                    required
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
+                  <Input
+                    type="text"
+                    name="username"
+                    onChange={handleInputModalChange}
+                    placeholder="Username (Optional)"
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
                   <label className="text-sm text-neutral-500 font-normal">Tips: username digunakan AI untuk memanggil kamu!</label>
                 </div>
               </div>
               <DialogFooter className="mt-4">
-                <Link href="/discuss" className="w-full ">
+                <Link href="/siswa/discuss" className="w-full ">
                   <Button className="text-white w-full items-center  bg-purple-800" type="submit">
                     Mulai diskusi sekarang!
                   </Button>
@@ -185,6 +204,18 @@ export default function HomeSiswa() {
         </p>
       </div>
       <div className="sm:fixed flex mt-5 justify-center items-center relative sm:bottom-0 sm:right-0 sm:mb-10 sm:mr-10">
+        <AnimatePresence>
+          {showErrorAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
+            </motion.div>
+          )}
+          {showErrorPinAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error Input" description="PIN harus berupa angka dan maksimal 4 digit." />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <AnimatePresence>
           {showErrorAlert && (
             <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">

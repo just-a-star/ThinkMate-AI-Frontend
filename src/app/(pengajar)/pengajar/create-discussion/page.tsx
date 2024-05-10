@@ -2,21 +2,22 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonDialog } from "../../components/btn-generate-dialog";
-import { Button } from "../../components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-
+import { Button } from "../../../components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../../components/ui/dialog";
 import { useState } from "react";
-import { postFetcher } from "../../services/fetcher";
+import { postFetcher } from "../../../services/fetcher";
 import { mutate } from "swr";
-import GuruNav from "../../components/guru-nav";
-
+import GuruNav from "../../../components/guru-nav";
+import { ChevronLeft } from "lucide-react";
+import { DropdownMenuUser } from "@/src/app/components/dropdown-user";
+import { useSelector } from "react-redux";
 export default function CreateDiscussion() {
   // Generate Quiz PIN
   const [quizData, setData] = useState({ topic: "" });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [quizResponse, setQuizResponse] = useState({ pin: "", id: null, topic: "" });
+  
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     setData({ ...quizData, [e.target.name]: e.target.value });
@@ -53,8 +54,19 @@ export default function CreateDiscussion() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-12">
+      <header className="container flex items-center w-full justify-between">
+        <nav className="">
+          <Link href="/pengajar/create-discussion" className="flex justify-start">
+            <Button variant="outline" size="icon">
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+        </nav>
+        <h1 className="text-4xl font-black mb-5">ThinkMate AI</h1>
+
+        <DropdownMenuUser />
+      </header>
       {/* Title */}
-      <h1 className="text-4xl font-black mb-5">ThinkMate AI</h1>
 
       {/* Nav */}
       <GuruNav />
@@ -112,7 +124,7 @@ export default function CreateDiscussion() {
                 <DialogDescription>Yuk, bagikan PIN ini ke siswa!</DialogDescription>
               </div>
               <DialogFooter className="mt-4">
-                <Link href="/detail-discussion" className="w-full ">
+                <Link href="/pengajar/detail-discussion" className="w-full ">
                   <Button className="text-white w-full items-center  bg-purple-800" type="submit">
                     Pantau detail diskusi
                   </Button>

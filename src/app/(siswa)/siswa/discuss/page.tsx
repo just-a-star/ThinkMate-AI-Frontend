@@ -1,24 +1,24 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar";
 import { ChevronLeft } from "lucide-react";
 import MicrophoneSVG from "../../../../public/images/microphone-chat.svg";
-import { Textarea } from "../../components/ui/textarea";
+import { Textarea } from "../../../components/ui/textarea";
 import { useState, useEffect, SetStateAction, use, useRef } from "react";
-import Providers from "../../../config/Providers";
-import { useQuiz } from "../../services/queries";
-import { postFetcher } from "../../services/fetcher";
+import Providers from "../../../../config/Providers";
+import { useQuiz } from "../../../services/queries";
+import { postFetcher } from "../../../services/fetcher";
 import { mutate } from "swr";
-import BotResponse from "../../components/bot-chat-response";
-import UserResponse from "../../components/user-chat-audio";
+import BotResponse from "../../../components/bot-chat-response";
+import UserResponse from "../../../components/user-chat-audio";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../store/quizSlice";
-import chatSlice, { addMessage, resetChatState } from "../../../store/chatSlice";
-import AudioInput from "../../components/audio-input";
+import { RootState } from "../../../../store/store";
+import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../../store/quizSlice";
+import chatSlice, { addMessage, resetChatState } from "../../../../store/chatSlice";
+import AudioInput from "../../../components/audio-input";
 
 export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
@@ -77,7 +77,7 @@ export default function DiscussSiswa() {
 
   const sendMessage = async (message: string) => {
     if (!message.trim() || message === lastMessage) return; // Prevent sending empty messages
-
+    console.log("user message: ", message);
     const messageData = {
       message: message,
     };
@@ -137,7 +137,7 @@ export default function DiscussSiswa() {
       {/* <p>{conversationId}</p> */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
-          <Link href="/home" className="flex justify-start">
+          <Link href="/home-pengajar" className="flex justify-start">
             <Button variant="outline" size="icon">
               <ChevronLeft className="h-4 w-4" />
             </Button>

@@ -14,8 +14,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/login",
-        destination: "/auth/login",
+        source: "/api/auth/token/route.ts",
+        destination: "/api/auth/token",
       },
     ];
   },
