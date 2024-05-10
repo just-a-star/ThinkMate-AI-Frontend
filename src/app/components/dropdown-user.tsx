@@ -31,9 +31,11 @@ export function DropdownMenuUser() {
       // router.push("/pengajar/login");
       // refresh the page
       router.refresh();
+      router.push("/pengajar/login");
       
       redirect("/pengajar/login");
     }
+    
   }
   return (
     <DropdownMenu>

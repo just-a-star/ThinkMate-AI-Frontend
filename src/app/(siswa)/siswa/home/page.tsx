@@ -201,18 +201,6 @@ export default function HomeSiswa() {
             </motion.div>
           )}
         </AnimatePresence>
-        <AnimatePresence>
-          {showErrorAlert && (
-            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
-              <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
-            </motion.div>
-          )}
-          {showErrorPinAlert && (
-            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
-              <AlertDestructiveWrongPin title="Error Input" description="PIN harus berupa angka dan maksimal 4 digit." />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </main>
   );

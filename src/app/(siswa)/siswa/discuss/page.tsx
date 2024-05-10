@@ -23,8 +23,7 @@ import AudioInput from "../../../components/audio-input";
 export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
   const [userMessage, setUserMessage] = useState("");
-
-  const [coba, setCoba] = useState({ nama: "s", id: "" });
+  const [user, setUser] = useState({ nama: "", id: "" });
   const [lastMessage, setLastMessage] = useState("");
   const { messages } = useSelector((state: RootState) => state.chat);
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ export default function DiscussSiswa() {
     const user_name = localStorage.getItem("quiz_nama lengkap");
     const user_quiz_id = localStorage.getItem("quiz_username");
 
-    setCoba({ nama: user_name || "", id: user_quiz_id || "" });
+    setUser({ nama: user_name || "", id: user_quiz_id || "" });
     if (!hasStartedConversation.current) {
       const startConversation = async () => {
         const data = {
@@ -76,13 +75,15 @@ export default function DiscussSiswa() {
   };
 
   const sendMessage = async (message: string) => {
+
     if (!message.trim() || message === lastMessage) return; // Prevent sending empty messages
     console.log("user message: ", message);
+    
     const messageData = {
       message: message,
     };
     const apiUrl = `/conversation/${conversationId}/message`;
-
+    
     try {
       const response = await postFetcher(apiUrl, messageData);
       console.log(conversationId);
@@ -133,11 +134,9 @@ export default function DiscussSiswa() {
 
   return (
     <main className="container flex min-h-screen flex-col items-center py-8 px-2">
-      {/* <p>{quizState.quizDetails.id || coba.id}</p> */}
-      {/* <p>{conversationId}</p> */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
-          <Link href="/home-pengajar" className="flex justify-start">
+          <Link href="/siswa/home" className="flex justify-start">
             <Button variant="outline" size="icon">
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -145,7 +144,7 @@ export default function DiscussSiswa() {
         </nav>
         <div className="flex flex-col text-center">
           <h1 className="text-center flex text-2xl sm:font-semibold text-ungu-800 justify-center font-bold">Ruang Diskusi</h1>
-          <p>Nama: {coba.nama} </p>
+          <p>Nama: {user.nama} </p>
         </div>
 
         <Avatar>

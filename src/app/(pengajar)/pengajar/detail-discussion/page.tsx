@@ -27,8 +27,10 @@ import { getFetcher } from "../../../services/fetcher";
 import { ConversationItem } from "../../../types/conversationItem";
 import { useSearchParams } from "next/navigation";
 import { DropdownMenuUser } from "@/src/app/components/dropdown-user";
+import { Quiz } from "@/src/app/types/quiz";
 export default function DetailDiscussion() {
   const [conversationData, setConversationData] = useState<ConversationItem[]>([]);
+  const [quizDetails, setQuizDetails] = useState<Quiz["quizDetails"] | null>(null);
   const searchParams = useSearchParams();
 
   const id = searchParams.get("id");
@@ -38,7 +40,9 @@ export default function DetailDiscussion() {
       // Make sure the id is not undefined
       const fetchData = async () => {
         const response = await getFetcher(`/quiz/${id}/conversation`);
-        setConversationData(response.data);
+        setConversationData(response.data.conversations);
+        setQuizDetails(response.data);
+        console.log("id", response.data);
       };
       fetchData();
     } else {
@@ -73,8 +77,11 @@ export default function DetailDiscussion() {
       <div className="container ">
         <div className="flex py-4 justify-start flex-col w-full pt-8">
           <h1 className="items-start text-2xl font-small text-purple-800">
-            Diskusi Pancasila - <span className="text-black font-semibold">{id}</span>
+            <span>Topik: </span>
+            {quizDetails ? `${quizDetails.topic} - ` : "Loading..."}
+            <span className="text-black font-semibold">{quizDetails ? quizDetails.pin : ""}</span>
           </h1>
+
           <p className="text-neutral-600">Detail discussions done by students will appear here</p>
         </div>
         {/* <DataTableDiscussion data={paymentsData} columns={paymentColumns} /> */}
@@ -125,9 +132,6 @@ export default function DetailDiscussion() {
           </div>
         </div> */}
       </div>
-      <nav className="flex items-center justify-between w-full">
-        <Link href="/pengajar/create-discussion"></Link>
-      </nav>
     </main>
   );
 }
