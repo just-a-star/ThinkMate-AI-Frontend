@@ -25,20 +25,26 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avat
 import { useEffect, useState } from "react";
 import { getFetcher } from "../../../services/fetcher";
 import { ConversationItem } from "../../../types/conversationItem";
+import { useSearchParams } from "next/navigation";
+import { DropdownMenuUser } from "@/src/app/components/dropdown-user";
 export default function DetailDiscussion() {
   const [conversationData, setConversationData] = useState<ConversationItem[]>([]);
+  const searchParams = useSearchParams();
+
+  const pin = searchParams.get("pin");
 
   useEffect(() => {
-    const conversation_id = 31;
-    const fetchData = async () => {
-      const response = await getFetcher(`/quiz/${conversation_id}/conversation`);
-      // const data = await response();
-      //         setConversationData(data.data);
-      // };
-      setConversationData(response.data);
-    };
-    fetchData();
-  }, []);
+    if (pin) {
+      // Make sure the pin is not undefined
+      const fetchData = async () => {
+        const response = await getFetcher(`/quiz/${pin}/conversation`);
+        setConversationData(response.data);
+      };
+      fetchData();
+    } else {
+      alert("No pin or wrong pin provided ");
+    }
+  }, [pin]);
 
   const formatTime = (isoString: string | number | Date) => {
     const date = new Date(isoString);
@@ -54,23 +60,20 @@ export default function DetailDiscussion() {
       {/* Header - Nav */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
-          <Link href="/home-pengajar" className="flex justify-start">
+          <Link href="/pengajar/history-discussion" className="flex justify-start">
             <Button variant="outline" size="icon">
               <ChevronLeft className="h-4 w-4" />
             </Button>
           </Link>
         </nav>
         <h1 className="flex text-xl justify-center">Detail Diskusi</h1>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <DropdownMenuUser />
       </header>
       {/* Title Discussion */}
       <div className="container ">
         <div className="flex py-4 justify-start flex-col w-full pt-8">
           <h1 className="items-start text-2xl font-small text-purple-800">
-            Diskusi Pancasila - <span className="text-black font-semibold">52341</span>
+            Diskusi Pancasila - <span className="text-black font-semibold">{pin}</span>
           </h1>
           <p className="text-neutral-600">Detail discussions done by students will appear here</p>
         </div>
@@ -101,10 +104,10 @@ export default function DetailDiscussion() {
             );
           })
         ) : (
-          <div>No data found</div>
+          <div>No data found, no students has started their quiz</div>
         )}
 
-        <div className="flex justify-start w-full">
+        {/* <div className="flex justify-start w-full">
           <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
             <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
           </div>
@@ -120,10 +123,10 @@ export default function DetailDiscussion() {
           <div className="flex items-center ml-auto">
             <Button className="justify-end bg-grey-50 hover:bg-purple-100 border border-purple-800 text-purple-800 rounded-2xl">Uncompleted</Button>
           </div>
-        </div>
+        </div> */}
       </div>
       <nav className="flex items-center justify-between w-full">
-        <Link href="/home-pengajar"></Link>
+        <Link href="/pengajar/create-discussion"></Link>
       </nav>
     </main>
   );

@@ -25,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avat
 import { useEffect, useState } from "react";
 import { getFetcher } from "../../../services/fetcher";
 import { useSelector } from "react-redux";
+import { DropdownMenuUser } from "@/src/app/components/dropdown-user";
 export default function HistoryDiscussion() {
   const [isLoading, setIsLoading] = useState(false);
   const [conversationData, setConversationData] = useState([]);
@@ -58,10 +59,7 @@ export default function HistoryDiscussion() {
           </Link>
         </nav>
         <h1 className="flex justify-center text-xl">Riwayat Diskusi</h1>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <DropdownMenuUser />
       </header>
 
       {/* List Discussion */}
@@ -71,6 +69,7 @@ export default function HistoryDiscussion() {
         {/* Each item */}
         {conversationData.map((item: any) => (
           <div key={item.ID} className="flex flex-col bg-purple-50 rounded-lg mt-2 p-4">
+            <Link href={`/pengajar/detail-discussion?pin=${item.ID}`}>
             <div className="flex items-center ">
               <Image className="bg-white rounded-lg p-2" src="/images/fi-br-megaphone.svg" alt="alt" width={50} height={50} />
               <div className="p-2">
@@ -91,7 +90,7 @@ export default function HistoryDiscussion() {
                 <p className="text-right text-neutral-500">{new Date(item.CreatedAt).toLocaleTimeString()}</p>
               </div>
             </div>
-
+            </Link>
             <hr className="h-0.5 my-3 bg-neutral-200" />
 
             <div className="flex justify-between items-center">
@@ -117,7 +116,7 @@ export default function HistoryDiscussion() {
 
             <div className="justify-items-center ml-auto items-end">
               <p className="text-right text-neutral-500">
-                <span>Senin, </span>22/07/2022
+                <span>Senin, </span>22/07Link/2022
               </p>
               <p className="text-right text-neutral-500">11:34 AM</p>
             </div>

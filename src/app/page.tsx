@@ -46,7 +46,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-row justify-center space-x-3 w-full z-20">
-        <Link href="/home">
+        <Link href="/siswa/home">
           <Button className="bg-white text-purple-800 p-6 px-12 rounded-lg mt-2 hover:bg-purple-200 hover:text-purple-950">Siswa</Button>
         </Link>
         <Link href="/pengajar/login">
