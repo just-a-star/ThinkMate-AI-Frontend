@@ -48,7 +48,7 @@ export default function HistoryDiscussion() {
   }, [pengajar.id]); // Dependency array to prevent infinite loops
 
   return (
-    <main className="container flex min-h-screen flex-col items-center p-24">
+    <main className="container flex min-h-screen flex-col items-center py-8 px-2">
       {/* Header - Nav */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
@@ -70,26 +70,26 @@ export default function HistoryDiscussion() {
         {conversationData.map((item: any) => (
           <div key={item.ID} className="flex flex-col bg-purple-50 rounded-lg mt-2 p-4">
             <Link href={`/pengajar/detail-discussion?id=${item.ID}`}>
-            <div className="flex items-center ">
-              <Image className="bg-white rounded-lg p-2" src="/images/fi-br-megaphone.svg" alt="alt" width={50} height={50} />
-              <div className="p-2">
-                <h2 className=" text-neutral-800 text-lg">Diskusi {item.topic}</h2>
-                <div className="flex flex-col">
-                  <p className="text-sm text-neutral-500">Pin: {item.pin}</p>
+              <div className="flex items-center ">
+                <Image className="bg-white rounded-lg p-2" src="/images/fi-br-megaphone.svg" alt="alt" width={50} height={50} />
+                <div className="p-2">
+                  <h2 className=" text-neutral-800 text-lg">Diskusi {item.topic}</h2>
+                  <div className="flex flex-col">
+                    <p className="text-sm text-neutral-500">Pin: {item.pin}</p>
 
-                  <p className="text-sm text-neutral-500">Jumlah Siswa: 20</p>
-                  <p className="text-sm text-neutral-500">Jumlah Diskusi: 10</p>
+                    <p className="text-sm text-neutral-500">Jumlah Siswa: 20</p>
+                    <p className="text-sm text-neutral-500">Jumlah Diskusi: 10</p>
+                  </div>
+                </div>
+
+                <div className="justify-items-center ml-auto items-end">
+                  <p className="text-right text-neutral-500">
+                    {/* <span>{new Date(item.CreatedAt).toLocaleDateString()}</span> */}
+                    <p>{new Date(item.CreatedAt).toLocaleDateString()}</p>
+                  </p>
+                  <p className="text-right text-neutral-500">{new Date(item.CreatedAt).toLocaleTimeString()}</p>
                 </div>
               </div>
-
-              <div className="justify-items-center ml-auto items-end">
-                <p className="text-right text-neutral-500">
-                  {/* <span>{new Date(item.CreatedAt).toLocaleDateString()}</span> */}
-                  <p>{new Date(item.CreatedAt).toLocaleDateString()}</p>
-                </p>
-                <p className="text-right text-neutral-500">{new Date(item.CreatedAt).toLocaleTimeString()}</p>
-              </div>
-            </div>
             </Link>
             <hr className="h-0.5 my-3 bg-neutral-200" />
 

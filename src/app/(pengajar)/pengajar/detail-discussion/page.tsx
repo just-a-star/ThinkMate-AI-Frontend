@@ -92,10 +92,12 @@ export default function DetailDiscussion() {
             const [name, studentId] = parseStudentName(item.student_name);
             return (
               <div key={item.ID} className="flex justify-start w-full pb-4">
+                <Link href={`/pengajar/detail-conversation?id=${item.ID}`}>
                 <div className=" overflow-hidden p-2 bg-purple-100 flex items-center rounded">
                   <Image src="/images/microphone.svg" alt="Gambar Microphone" width={30} height={30} />
                 </div>
-
+                </Link>
+                <Link href={`/pengajar/detail-conversation?id=${item.ID}`}>
                 <div className="flex flex-col pl-2">
                   <h2>
                     Diskusi {name} <span className="text-purple-800  text-semobold overflow-hidden"> {studentId ? `- ${studentId}` : ""}</span>
@@ -104,6 +106,7 @@ export default function DetailDiscussion() {
                     {formatTime(item.CreatedAt)}- <span>{formatTime(item.UpdatedAt)}</span>
                   </h3>
                 </div>
+                </Link>
                 <div className="flex items-center ml-auto">
                   <Button className="justify-end bg-purple-900 hover:bg-purple-800 rounded-2xl">Completed</Button>
                 </div>
