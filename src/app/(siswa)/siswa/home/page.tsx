@@ -18,6 +18,7 @@ import { cookies } from "next/headers";
 export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
   const [pinQuiz, setPinQuiz] = useState("");
+
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -30,12 +31,14 @@ export default function HomeSiswa() {
     hidden: { opacity: 0, transition: { duration: 0.5 } },
     visible: { opacity: 1, transition: { duration: 0.5 } },
     exit: { opacity: 0, transition: { duration: 0.5 } },
+    
   };
 
   // dijalanin setiap refresh
   useEffect(() => {
     // Reset states when the component mounts (i.e., when the website is opened)
     setPinQuiz("");
+
     dispatch(
       setQuizDetails({
         pin: "",
@@ -164,6 +167,21 @@ export default function HomeSiswa() {
                     placeholder="Username (Optional)"
                     className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
                   />
+                  <Input
+                    type="text"
+                    onChange={handleInputModalChange}
+                    name="name"
+                    placeholder="Nama Lengkap"
+                    required
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
+                  <Input
+                    type="text"
+                    name="username"
+                    onChange={handleInputModalChange}
+                    placeholder="Username (Optional)"
+                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
+                  />
                   <label className="text-sm text-neutral-500 font-normal">Tips: username digunakan AI untuk memanggil kamu!</label>
                 </div>
               </div>
@@ -186,6 +204,18 @@ export default function HomeSiswa() {
         </p>
       </div>
       <div className="sm:fixed flex mt-5 justify-center items-center relative sm:bottom-0 sm:right-0 sm:mb-10 sm:mr-10">
+        <AnimatePresence>
+          {showErrorAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
+            </motion.div>
+          )}
+          {showErrorPinAlert && (
+            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+              <AlertDestructiveWrongPin title="Error Input" description="PIN harus berupa angka dan maksimal 4 digit." />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <AnimatePresence>
           {showErrorAlert && (
             <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">

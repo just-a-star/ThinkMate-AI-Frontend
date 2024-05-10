@@ -137,7 +137,7 @@ export default function DiscussSiswa() {
       {/* <p>{conversationId}</p> */}
       <header className="container flex items-center w-full justify-between">
         <nav className="">
-          <Link href="/siswa/home" className="flex justify-start">
+          <Link href="/home-pengajar" className="flex justify-start">
             <Button variant="outline" size="icon">
               <ChevronLeft className="h-4 w-4" />
             </Button>
