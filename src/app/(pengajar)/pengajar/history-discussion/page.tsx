@@ -69,7 +69,7 @@ export default function HistoryDiscussion() {
         {/* Each item */}
         {conversationData.map((item: any) => (
           <div key={item.ID} className="flex flex-col bg-purple-50 rounded-lg mt-2 p-4">
-            <Link href={`/pengajar/detail-discussion?pin=${item.ID}`}>
+            <Link href={`/pengajar/detail-discussion?id=${item.ID}`}>
             <div className="flex items-center ">
               <Image className="bg-white rounded-lg p-2" src="/images/fi-br-megaphone.svg" alt="alt" width={50} height={50} />
               <div className="p-2">
