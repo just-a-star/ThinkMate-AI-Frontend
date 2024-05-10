@@ -31,7 +31,6 @@ export default function HomeSiswa() {
     hidden: { opacity: 0, transition: { duration: 0.5 } },
     visible: { opacity: 1, transition: { duration: 0.5 } },
     exit: { opacity: 0, transition: { duration: 0.5 } },
-    
   };
 
   // dijalanin setiap refresh
@@ -167,21 +166,7 @@ export default function HomeSiswa() {
                     placeholder="Username (Optional)"
                     className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
                   />
-                  <Input
-                    type="text"
-                    onChange={handleInputModalChange}
-                    name="name"
-                    placeholder="Nama Lengkap"
-                    required
-                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
-                  />
-                  <Input
-                    type="text"
-                    name="username"
-                    onChange={handleInputModalChange}
-                    placeholder="Username (Optional)"
-                    className="px-10 p-4 border border-slate-300 rounded-lg w-2/3 py-2 my-2"
-                  />
+
                   <label className="text-sm text-neutral-500 font-normal">Tips: username digunakan AI untuk memanggil kamu!</label>
                 </div>
               </div>
