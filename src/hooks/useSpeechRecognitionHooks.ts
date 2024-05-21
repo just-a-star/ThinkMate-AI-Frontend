@@ -6,7 +6,7 @@ const initializeRecognition = () => {
   if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
     recognition = new window.webkitSpeechRecognition();
     recognition.continuous = true; // Keep listening even if the user pauses
-    recognition.lang = "id-ID"; // Set language to Indonesian
+    recognition.lang = "en-US"; // Set language to Indonesian
     console.log("Speech Recognition initialized");
   } else {
     console.log("Speech Recognition not supported");
@@ -29,7 +29,7 @@ const useSpeechRecognition = () => {
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         transcript += event.results[i][0].transcript;
       }
-      setText(prevText => prevText + ' ' + transcript.trim()); // Appends new text to existing text, ensuring continuity
+      setText((prevText) => prevText + " " + transcript.trim()); // Appends new text to existing text, ensuring continuity
       console.log(transcript);
     };
 
