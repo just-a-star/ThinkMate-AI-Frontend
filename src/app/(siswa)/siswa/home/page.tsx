@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import WrongPinAlert from "../../../components/wrong-pin-dialog";
 
 export default function HomeSiswa() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +25,12 @@ export default function HomeSiswa() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showErrorPinAlert, setShowErrorPinAlert] = useState(false);
+  const [wrongPinDialogOpen, setWrongPinDialogOpen] = useState(false);
   const dispatch = useDispatch();
   const quizState = useSelector((state: RootState) => state.quiz);
 
   const fadeOut = {
-    hidden: { opacity: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, transition: { duration: 0.25 } },
     visible: { opacity: 1, transition: { duration: 0.5 } },
     exit: { opacity: 0, transition: { duration: 0.5 } },
   };
@@ -67,7 +69,7 @@ export default function HomeSiswa() {
       setShowErrorPinAlert(true);
       setTimeout(() => {
         setShowErrorPinAlert(false);
-      }, 3000);
+      }, 5000);
     }
   };
 
@@ -103,7 +105,8 @@ export default function HomeSiswa() {
       mutate("/quiz");
     } catch (error) {
       console.error("Error fetching quiz: ", error);
-      alert("Error fetching quiz. Please try again later.");
+      // alert("Error fetching quiz. Please try again later.");
+      setWrongPinDialogOpen(true);
       setShowErrorAlert(true);
     } finally {
       setIsLoading(false);
@@ -191,9 +194,11 @@ export default function HomeSiswa() {
       <div className="sm:fixed flex mt-5 justify-center items-center relative sm:bottom-0 sm:right-0 sm:mb-10 sm:mr-10">
         <AnimatePresence>
           {showErrorAlert && (
-            <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
-              <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
-            </motion.div>
+
+            <WrongPinAlert dialogOpen={wrongPinDialogOpen} setDialogOpen={setWrongPinDialogOpen} onClose={() => setShowErrorAlert(false)} />
+            // <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
+            //   <AlertDestructiveWrongPin title="Error" description="Wrong pin, please try again." />
+            // </motion.div>
           )}
           {showErrorPinAlert && (
             <motion.div variants={fadeOut} initial="hidden" animate="visible" exit="exit">
