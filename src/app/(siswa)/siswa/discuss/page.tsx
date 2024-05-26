@@ -2,16 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
-
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar";
 import { ChevronLeft } from "lucide-react";
-import MicrophoneSVG from "../../../../public/images/microphone-chat.svg";
 import { Textarea } from "../../../components/ui/textarea";
 import { useState, useEffect, SetStateAction, use, useRef } from "react";
-import Providers from "../../../../config/Providers";
-import { useQuiz } from "../../../services/queries";
 import { postFetcher } from "../../../services/fetcher";
-import { mutate } from "swr";
 import BotResponse from "../../../components/bot-chat-response";
 import UserResponse from "../../../components/user-chat-audio";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +14,7 @@ import { RootState } from "../../../../store/store";
 import quizSlice, { setName, setStarted, setNomorAbsen, setQuizDetails, setShowDialog, setUsername } from "../../../../store/quizSlice";
 import chatSlice, { addMessage, resetChatState } from "../../../../store/chatSlice";
 import AudioInput from "../../../components/audio-input";
+import { redirectHome } from "@/src/server-actions/siswa/actions";
 
 export default function DiscussSiswa() {
   const [conversationId, setConversationId] = useState(null);
@@ -32,15 +28,19 @@ export default function DiscussSiswa() {
 
   const hasStartedConversation = useRef(false);
   useEffect(() => {
+    console.log(quizState.quizDetails.id, quizState.quizDetails.id);
     const user_name = localStorage.getItem("quiz_nama lengkap");
     const user_quiz_id = localStorage.getItem("quiz_username");
 
     setUser({ nama: user_name || "", id: user_quiz_id || "" });
-    if (!hasStartedConversation.current) {
+
+    if (quizState.quizDetails.id === null && quizState.quizDetails.id === null) {
+      redirectHome("/siswa/home");
+    } else if (!hasStartedConversation.current) {
       const startConversation = async () => {
         const data = {
-          quiz_id: quizState.quizDetails.id || user_quiz_id,
-          name: quizState.name || user_name,
+          quiz_id: quizState.quizDetails.id,
+          name: quizState.name,
         };
 
         const response = await postFetcher("/conversation", data);
@@ -68,22 +68,21 @@ export default function DiscussSiswa() {
       startConversation();
       hasStartedConversation.current = true;
     }
-  }, [quizState.quizDetails.id, quizState.name, quizState.started, dispatch]);
+  }, [quizState.quizDetails.id, quizState.name, quizState.started, dispatch, conversationId]);
 
   const handleMessageChange = (e: { target: { value: SetStateAction<string> } }) => {
     setUserMessage(e.target.value);
   };
 
   const sendMessage = async (message: string) => {
-
     if (!message.trim() || message === lastMessage) return; // Prevent sending empty messages
     console.log("user message: ", message);
-    
+
     const messageData = {
       message: message,
     };
     const apiUrl = `/conversation/${conversationId}/message`;
-    
+
     try {
       const response = await postFetcher(apiUrl, messageData);
       console.log(conversationId);
@@ -133,6 +132,7 @@ export default function DiscussSiswa() {
   };
 
   return (
+    
     <main className="container flex min-h-screen flex-col items-center py-8 px-2">
       <header className="container flex items-center w-full justify-between">
         <nav className="">

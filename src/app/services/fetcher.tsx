@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
 import { cookies } from "next/headers";
 
 export const axiosInstance = axios.create({
-  baseURL: "https://thinkmate-backend-development.up.railway.app/v1",
+  baseURL: "https://thinkmate-backend-production.up.railway.app/v1",
   headers: {
     "Content-Type": "application/json", // Set Content-Type for all requests
   },
